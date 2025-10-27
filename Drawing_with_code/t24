@@ -1,0 +1,23 @@
+from turtle import *
+
+# setup
+
+speed(0)
+tracer(2)
+pensize(5)
+
+def move_diagnal(lenght):
+    for i in range(lenght):
+        left(90)
+        fd(1)
+        right(90)
+        fd(1)
+
+for i in range(4):
+    move_diagnal(100)
+    left(90)
+    circle(100,180)
+    move_diagnal(100)
+    # left(10)
+
+exitonclick()
