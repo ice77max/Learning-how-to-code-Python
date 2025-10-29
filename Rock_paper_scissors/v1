@@ -59,7 +59,7 @@ moves = ["rock", "paper", "scissors"]
 player_score = 0
 ai_score = 0
 
-# game loop
+# Game loop
 
 while player_score < 3 and ai_score < 3:
     ai_choice = random.choice(moves)
