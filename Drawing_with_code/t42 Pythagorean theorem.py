@@ -3,7 +3,7 @@ import math
 
 # parameters
 Ax = 0
-Ay = 0
+Ay = 10
 
 Cx = 300
 Cy = 300
