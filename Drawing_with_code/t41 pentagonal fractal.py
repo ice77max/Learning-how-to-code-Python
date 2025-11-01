@@ -15,12 +15,12 @@ corners = {}
 
 # TODO Play with those numbers
 # change those numbers to get different shapes
-sides = 6
+sides = 5
 side_size = 400
 # of set so the shape is in the center of the screen
 teleport(-100,-350)
 
-no_of_iterations = 10000
+no_of_iterations = 100000
 
 tracer(0) # speed
 
@@ -51,7 +51,7 @@ def pythagorean_triangle(current_pos, where_to_go):
     b = abs(By - Cy)
     c = abs(a**2 + b**2) 
     c = round(math.sqrt(c))
-    return round((c / 3) * 2)
+    return round(c * 0.618)#round((c / 3) * 2)
 
 # hexagon (or any other shape)
 draw_numbers(sides, side_size)
