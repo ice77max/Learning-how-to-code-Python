@@ -22,6 +22,8 @@ teleport(-100,-350)
 
 no_of_iterations = 100000
 
+tracer(0) # speed
+
 # functions
 
 def draw_numbers(sides, side_size):
@@ -54,7 +56,7 @@ def pythagorean_triangle(current_pos, where_to_go):
 # hexagon (or any other shape)
 draw_numbers(sides, side_size)
 
-tracer(0)
+
 # koch snowflake
 for i in range(no_of_iterations):
     dice = random.randrange(1,sides + 1)
