@@ -1,106 +1,78 @@
-from turtle import *
-import tkinter as tk
-from tkinter import ttk
+import pygame
 import random
 import math
+import colorsys
+from pygame.locals import *
 
-class ChaosPolygon:
-    def __init__(self, sides=6, side_size=400, iterations=10000, dot_size=3, show_labels=True):
-        self.sides = sides
-        self.side_size = side_size
-        self.iterations = iterations
-        self.dot_size = dot_size
-        self.show_labels = show_labels
-        self.corners = {}
+idx = [0, 0, 0]
 
-    def setup_canvas(self):
-        setup(1.0, 1.0)
-        speed(0)
-        pensize(1)
-        penup()
-        tracer(0)
-        self.center_shape()
+def mark_pixel(surface, pos, pcol):
+    col = surface.get_at(pos)
+    surface.set_at(pos, (min(col[0] + pcol[0]/10, 255),
+                         min(col[1] + pcol[1]/10, 255),
+                         min(col[2] + pcol[2]/10, 255)))
 
-    def center_shape(self):
-        angle = math.radians(360 / self.sides)
-        radius = self.side_size / (2 * math.sin(angle / 2))
-        teleport(0, -radius)
+def random_point_index(p):
+    if len(p) <= 3:
+        return random.randint(0, len(p) - 1)
 
-    def draw_polygon(self):
-        self.corners.clear()
-        for i in range(self.sides):
-            forward(self.side_size)
-            pos = position()
-            val = (round(pos[0]), round(pos[1]))
-            self.corners[i + 1] = val
-            if self.show_labels:
-                write(f"{i+1}", font=("Arial", 14))
-            left(360 / self.sides)
+    global idx
+    idx[2] = idx[1]
+    idx[1] = idx[0]
+    dst1 = abs(idx[1] - idx[2])
 
-    def pythagorean_step_size(self, current_pos, target_pos):
-        Ax, Ay = current_pos
-        Cx, Cy = target_pos
-        Bx, By = Cx, Ay
-        a = abs(Ax - Bx)
-        b = abs(By - Cy)
-        c = math.sqrt(a**2 + b**2)
-        return round((c / 3) * 2)
+    while True:
+        idx[0] = random.randint(0, len(p) - 1)
+        dst = abs(idx[0] - idx[1])
+        if dst1 == 0 and (dst == 1 or dst == len(p) - 1):
+            continue
+        else:
+            break
 
-    def iterate(self):
-        for _ in range(self.iterations):
-            dice = random.randint(1, self.sides)
-            target = self.corners[dice]
-            setheading(towards(target))
-            current = (round(xcor()), round(ycor()))
-            step = self.pythagorean_step_size(current, target)
-            forward(step)
-            dot(self.dot_size)
-        update()
+    return idx[0]
 
-    def run(self):
-        self.setup_canvas()
-        self.draw_polygon()
-        self.iterate()
-        exitonclick()
+def init_polygon(width, height, n):
+    delta_angle = 360/n
+    r = width/2 - 10
+    p = []
 
-# 🖥️ GUI
-def launch_gui():
-    def start_drawing():
-        clear()
-        reset()
-        polygon = ChaosPolygon(
-            sides=int(sides_var.get()),
-            side_size=int(size_var.get()),
-            iterations=int(iter_var.get()),
-            dot_size=int(dot_var.get()),
-            show_labels=label_var.get()
-        )
-        polygon.run()
+    for i in range(0, n):
+        angle = (180 + i*delta_angle) * math.pi / 180
+        color = colorsys.hsv_to_rgb((i*delta_angle)/360, 0.8, 1)
+        p.append(((width/2 + r*math.sin(angle),
+                   height/2 + r*math.cos(angle)),
+                  (int(color[0]*255), int(color[1]*255), int(color[2]*255))))
 
-    root = tk.Tk()
-    root.title("Chaos Polygon Generator")
+    return p
 
-    ttk.Label(root, text="Sides:").grid(column=0, row=0)
-    sides_var = tk.StringVar(value="6")
-    ttk.Entry(root, textvariable=sides_var).grid(column=1, row=0)
+def main(width, height, n, r):
+    pygame.init()
+    surface = pygame.display.set_mode((width, height))
+    pygame.display.set_caption('Das Chaos Spiel')
 
-    ttk.Label(root, text="Side Size:").grid(column=0, row=1)
-    size_var = tk.StringVar(value="400")
-    ttk.Entry(root, textvariable=size_var).grid(column=1, row=1)
+    p = init_polygon(width, height, n)
 
-    ttk.Label(root, text="Iterations:").grid(column=0, row=2)
-    iter_var = tk.StringVar(value="10000")
-    ttk.Entry(root, textvariable=iter_var).grid(column=1, row=2)
+    x, y = (400, 300)
+    step = 0
+    while True:
+        step = step + 1
+        point_idx = random_point_index(p)
 
-    ttk.Label(root, text="Dot Size:").grid(column=0, row=3)
-    dot_var = tk.StringVar(value="3")
-    ttk.Entry(root, textvariable=dot_var).grid(column=1, row=3)
+        pos = p[point_idx][0]
+        color = p[point_idx][1]
+        x += (pos[0] - x) * r
+        y += (pos[1] - y) * r
 
-    label_var = tk.BooleanVar(value=True)
-    ttk.Checkbutton(root, text="Show Labels", variable=label_var).grid(column=0, row=4, columnspan=2)
+        mark_pixel(surface, (int(x), int(y)), color)
 
-    ttk.Button(root, text="Generate", command=start_drawing).grid(column=0, row=5, columnspan=2)
+        if step % 1000 == 0:
+            pygame.display.update()
 
-    root.mainloop()
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.image.save(surface, 'chaosspiel.jpg')
+                pygame.quit()
+                return
 
-launch_gui()
+if __name__ == "__main__":
+    n=5; main(800, 800, n,  0.45)

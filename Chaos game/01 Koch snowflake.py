@@ -23,7 +23,7 @@ def koch(length,step):
 
 teleport(-200,-200)
 
-x = 3
+x = 3 # change this for different overall shape
 
 fillcolor("#C4C4C4")
 begin_fill()

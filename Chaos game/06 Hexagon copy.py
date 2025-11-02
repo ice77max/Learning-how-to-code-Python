@@ -17,10 +17,13 @@ corners = {}
 # change those numbers to get different shapes
 sides = 6
 side_size = 400
+ratio = 0.667
 # of set so the shape is in the center of the screen
-teleport(-100,-350)
+teleport(-200,-250)
 
-no_of_iterations = 10000
+
+
+no_of_iterations = 30000
 
 tracer(0) # speed
 
@@ -51,13 +54,13 @@ def pythagorean_triangle(current_pos, where_to_go):
     b = abs(By - Cy)
     c = abs(a**2 + b**2) 
     c = round(math.sqrt(c))
-    return round((c / 3) * 2)
+    return round(c * ratio)
 
-# hexagon (or any other shape)
+# Draw initial shape
 draw_numbers(sides, side_size)
 
 
-# koch snowflake
+# fractal drawing
 for i in range(no_of_iterations):
     dice = random.randrange(1,sides + 1)
     where_to_go = corners[dice]
