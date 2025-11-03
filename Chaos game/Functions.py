@@ -27,7 +27,7 @@ no_of_iterations = 10000
 
 tracer(0) # speed
 
-# functions
+# functions s
 
 def draw_numbers(sides, side_size, draw_labels):
     for i in range(sides):
