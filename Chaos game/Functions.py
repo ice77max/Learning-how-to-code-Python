@@ -27,9 +27,12 @@ no_of_iterations = 10000
 
 tracer(0) # speed
 
-# functions s
+# functions
 
-def draw_numbers(sides, side_size, draw_labels):
+def draw_base_shape(sides: int, side_size: int, draw_labels: bool=True, draw_lines: bool= False, line_size: int = 3):
+    if draw_lines:
+        pendown()
+        pensize(line_size)
     for i in range(sides):
         forward(side_size)
         pos = position()
@@ -38,6 +41,8 @@ def draw_numbers(sides, side_size, draw_labels):
         if draw_labels:
             write(f"{i+1}", font=("Arial", 14))
         left(360/sides)
+        
+
 
 def pythagorean_triangle(current_pos, where_to_go):
     # parameters
@@ -58,7 +63,7 @@ def pythagorean_triangle(current_pos, where_to_go):
     return round(c * ratio)
 
 # Draw initial shape
-draw_numbers(sides, side_size)
+draw_base_shape(sides, side_size, draw_labels=False)
 
 
 # fractal drawing
