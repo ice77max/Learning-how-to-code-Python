@@ -14,3 +14,9 @@ eggs = ham + spam
 # print(f"spam {spam} ham {ham} eggs {eggs}")
 
 print(f"{spam=}, {ham=}, {eggs=}")
+
+
+
+
+print(f"{spam=}") 
+
