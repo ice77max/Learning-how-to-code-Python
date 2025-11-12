@@ -1,12 +1,14 @@
 from turtle import *
+from time import sleep
 # YouTube/Sierra_wild_3d
 
 # setup
 pensize(3)
 speed(0)
 bgcolor("black")
-pencolor("#0AF7FF")
+pencolor("#FF4242")
 
+t = Turtle()
 setup(1.0,1.0)
 
 # functions
@@ -31,9 +33,26 @@ def pekDot(c, f):
     backward(c)
     left(10)
     pendown()
+    
+def writeBottomOfTheScreen(i, t):
+    t.speed(0)
+    t.hideturtle()
+    t.penup()
+    t.pencolor("#FF4242")
+    t.goto(300, -350)
+    t.write(f"Angle: {i * 10}", font=("Coper", 20, "normal"))
+    
+# magic
+tracer(1)
+hideturtle()
 
-for i in range(13):
-    shape(a=200, b=90, c=40, d=80, e=100, f=20)
-    left(120)
-
+for x in range(15):
+    writeBottomOfTheScreen(x, t)
+    for i in range(20):
+        shape(a=200, b=90, c=40, d=80, e=100, f=20)
+        left(x * 10)
+    sleep(1)
+    clear()
+    t.clear()
+    
 exitonclick() # end script
