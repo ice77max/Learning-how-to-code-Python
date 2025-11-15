@@ -25,7 +25,7 @@ teleport(-200,-250)
 
 no_of_iterations = 10000
 
-tracer(0) # speed
+tracer(2) # speed
 
 # functions
 
@@ -57,7 +57,9 @@ def pythagorean_triangle(current_pos, where_to_go):
     return round(c * ratio)
 
 # Draw initial shape
-draw_numbers(sides, side_size)
+
+def main():
+    draw_numbers(sides, side_size)
 
 
 # fractal drawing
