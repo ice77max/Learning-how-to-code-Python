@@ -56,28 +56,28 @@ def pythagorean_triangle(current_pos, where_to_go):
     c = round(math.sqrt(c))
     return round(c * ratio)
 
-# Draw initial shape
 
 def main():
+    # Draw initial shape
     draw_numbers(sides, side_size)
 
+    # fractal drawing
+    for i in range(no_of_iterations):
+        dice = random.randrange(1,sides + 1)
+        where_to_go = corners[dice]
+        x = round(where_to_go[0])
+        y = round(where_to_go[1])
+        setheading(towards(x,y))
 
-# fractal drawing
-for i in range(no_of_iterations):
-    dice = random.randrange(1,sides + 1)
-    where_to_go = corners[dice]
-    x = round(where_to_go[0])
-    y = round(where_to_go[1])
-    setheading(towards(x,y))
+        current_pos = position()
+        current_pos_rounded = (round(current_pos[0]), round(current_pos[1]))
+        
+        forward(pythagorean_triangle(current_pos_rounded, where_to_go))
 
-    current_pos = position()
-    current_pos_rounded = (round(current_pos[0]), round(current_pos[1]))
-    
-    forward(pythagorean_triangle(current_pos_rounded, where_to_go))
+        dot(3)
 
-    dot(3)
-
-
+if __name__ == "__main__":
+    main()
 
 
 
