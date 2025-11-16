@@ -13,6 +13,7 @@ for i in range(120)[::-1]:
     rgb = colorsys.hsv_to_rgb(hue, 0.9, 0.9)
     t.pencolor(rgb)
 
+    print(hue)
     t.dot(i*3)
 
 # this works as you are only changing the hue and not other values of the colors 

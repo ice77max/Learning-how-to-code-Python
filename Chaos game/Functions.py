@@ -1,6 +1,7 @@
 from turtle import *
 import random
 import math
+import colorsys
 
 # of set of
 setup(1.0,1.0)
@@ -10,18 +11,15 @@ pensize(1)
 
 penup()
 
-# variables 
-corners = {}
 
 # TODO Play with those numbers
 # change those numbers to get different shapes
-sides = 2
+sides = 3
 side_size = 2000 / sides
 ratio = 0.5
 # of set so the shape is in the center of the screen
 
-
-no_of_iterations = 1000
+no_of_iterations = 10000
 
 tracer(0) # speed
 
@@ -95,27 +93,44 @@ def pythagorean_triangle(current_pos, where_to_go) -> int:
     c = round(math.sqrt(c))
     return round(c * ratio)
 
-# Draw initial shape
-corners = draw_base_shape(sides, side_size, draw_labels=True, draw_lines=True)
-
-
-
+def fractalDrawing(sides, no_of_iterations, pythagorean_triangle, corners):
 # fractal drawing
-for i in range(no_of_iterations):
-    dice = random.randrange(1,sides + 1)
-    where_to_go = corners[dice]
-    x = round(where_to_go[0])
-    y = round(where_to_go[1])
-    setheading(towards(x,y))
+    for i in range(no_of_iterations):
+        dice = random.randrange(1,sides + 1)
+        where_to_go = corners[dice]
+        x = round(where_to_go[0])
+        y = round(where_to_go[1])
+        setheading(towards(x,y))
 
-    current_pos = position()
-    current_pos_rounded = (round(current_pos[0]), round(current_pos[1]))
+        current_pos = position()
+        current_pos_rounded = (round(current_pos[0]), round(current_pos[1]))
     
-    forward(pythagorean_triangle(current_pos_rounded, where_to_go))
+        forward(pythagorean_triangle(current_pos_rounded, where_to_go))
 
-    dot(3)
+        band_1 = random.uniform(0.0, 0.33)
+        band_2 = random.uniform(0.4, 0.7)
+        band_3 = random.uniform(0.75, 1.0)
+        hue = 0.0
+        if dice == 1:
+            hue = band_1
+        elif dice == 2:
+            hue = band_2
+        else:
+            hue = band_3
+        
+        rgb = colorsys.hsv_to_rgb(hue, 0.9, 0.9)
+        
+        
+        dot(3, rgb)
 
+def main():
+    # Draw initial shape
+    corners = draw_base_shape(sides, side_size, draw_labels=True, draw_lines=True)
 
+    fractalDrawing(sides, no_of_iterations, pythagorean_triangle, corners)
+
+if __name__ == "__main__":
+    main()
 
 
 

@@ -10,8 +10,7 @@ pensize(1)
 
 penup()
 
-# variables 
-corners = {}
+
 
 # TODO Play with those numbers
 # change those numbers to get different shapes
@@ -21,15 +20,14 @@ ratio = 0.5
 # of set so the shape is in the center of the screen
 teleport(-200,-250)
 
-
-
 no_of_iterations = 10000
 
-tracer(2) # speed
+tracer(0) # speed
 
 # functions
 
 def draw_numbers(sides, side_size):
+    corners = {}
     for i in range(sides):
         forward(side_size)
         pos = position()
@@ -37,6 +35,7 @@ def draw_numbers(sides, side_size):
         corners[i + 1] = val # fills the dictionary with positions of the corners
         write(f"{i+1}", font=("Arial", 14))
         left(360/sides)
+    return corners
 
 def pythagorean_triangle(current_pos, where_to_go):
     # parameters
@@ -56,12 +55,7 @@ def pythagorean_triangle(current_pos, where_to_go):
     c = round(math.sqrt(c))
     return round(c * ratio)
 
-
-def main():
-    # Draw initial shape
-    draw_numbers(sides, side_size)
-
-    # fractal drawing
+def drawingFractal(corners):
     for i in range(no_of_iterations):
         dice = random.randrange(1,sides + 1)
         where_to_go = corners[dice]
@@ -75,6 +69,15 @@ def main():
         forward(pythagorean_triangle(current_pos_rounded, where_to_go))
 
         dot(3)
+
+def main():
+    # Draw initial shape
+    corners = draw_numbers(sides, side_size)
+
+    # fractal drawing
+    drawingFractal(corners)
+
+# main program runs here
 
 if __name__ == "__main__":
     main()

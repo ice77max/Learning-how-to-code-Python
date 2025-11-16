@@ -46,19 +46,4 @@ earthy = [
 # Combine all palettes into one mega palette (optional)
 mega_palette = pastel + vibrant + flat + neon + earthy
 
-# --- Demo drawing ---
-def demo(colors):
-    t = turtle.Turtle()
-    t.speed(0)
-    turtle.bgcolor("black")
 
-    for _ in range(50):
-        t.color(random.choice(colors))
-        t.forward(100)
-        t.right(123)
-
-    turtle.done()
-
-# Pick which palette to use here:
-# options: pastel, vibrant, flat, neon, earthy, mega_palette
-demo(mega_palette)
