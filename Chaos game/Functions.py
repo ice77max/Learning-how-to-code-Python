@@ -107,24 +107,31 @@ def fractalDrawing(sides, no_of_iterations, pythagorean_triangle, corners):
     
         forward(pythagorean_triangle(current_pos_rounded, where_to_go))
 
-        # color and dot drawing TODO move to separate function
-        # band_1 = random.uniform(0.0, 0.4)
-        # band_2 = random.uniform(0.3, 0.8)
-        # band_3 = random.uniform(0.7, 1.0)
-        # hue = 0.0
-        # if dice == 1:
-        #     hue = band_1
-        # elif dice == 2:
-        #     hue = band_2
-        # else:
-        #     hue = band_3
-        hue = i / (dice * 2) / no_of_iterations
+        # color and dot drawing 
+        hue = define_hue(dice)
         
-        # TODO play with saturation and value based on position. Darker closer to the centre  
-        rgb = colorsys.hsv_to_rgb(hue, 0.9, 0.9)
-        
-        
-        dot(3, rgb)
+        draw_dot(hue)
+
+def define_hue(dice):
+    band_1 = random.uniform(0.1, 0.2)
+    band_2 = random.uniform(0.3, 0.5)
+    band_3 = random.uniform(0.7, 1.0)
+    hue = 0.0
+    if dice == 1:
+        hue = band_1
+    elif dice == 2:
+        hue = band_2
+    else:
+        hue = band_3
+        #hue = i / (dice * 1.5) / no_of_iterations
+    return hue
+    # TODO play with saturation and value based on position. Darker closer to the centre  
+
+def draw_dot(hue):
+    
+    # TODO play with saturation based on distance from the center
+    rgb = colorsys.hsv_to_rgb(hue, 0.6, 0.9)
+    dot(3, rgb)
 
 def main():
     # Draw initial shape
