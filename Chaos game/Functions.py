@@ -118,11 +118,11 @@ def define_hue(dice):
     band_3 = random.uniform(0.7, 1.0)
     hue = 0.0
     if dice == 1:
-        hue = band_1
+        hue = 0.3 #band_1
     elif dice == 2:
-        hue = band_2
+        hue = 0.5 #band_2
     else:
-        hue = band_3
+        hue = 0.8 #band_3
         #hue = i / (dice * 1.5) / no_of_iterations
     return hue
     # TODO play with saturation and value based on position. Darker closer to the centre  
