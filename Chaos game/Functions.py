@@ -72,8 +72,7 @@ def draw_base_shape(
             write(f"{i+1}", font= label_font)
         left(360/sides)
     penup()
-    return corners
-        
+    return corners       
 
 def pythagorean_triangle(current_pos, where_to_go) -> int:
     # parameters
@@ -93,7 +92,7 @@ def pythagorean_triangle(current_pos, where_to_go) -> int:
     c = round(math.sqrt(c))
     return round(c * ratio)
 
-def fractalDrawing(sides, no_of_iterations, pythagorean_triangle, corners):
+def fractalDrawing(sides, no_of_iterations, corners):
 # fractal drawing
     for i in range(no_of_iterations):
         dice = random.randrange(1,sides + 1)
@@ -137,7 +136,7 @@ def main():
     # Draw initial shape
     corners = draw_base_shape(sides, side_size, draw_labels=True, draw_lines=True)
 
-    fractalDrawing(sides, no_of_iterations, pythagorean_triangle, corners)
+    fractalDrawing(sides, no_of_iterations, corners)
 
 if __name__ == "__main__":
     main()
