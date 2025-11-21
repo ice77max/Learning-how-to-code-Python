@@ -14,12 +14,19 @@ penup()
 
 # TODO Play with those numbers
 # change those numbers to get different shapes
-sides = 3
+sides = 4
 side_size = 2000 / sides
-ratio = 0.5
-# of set so the shape is in the center of the screen
+ratio = 0.55
+''' Perfect ratios according to wikipedia
+Triangle    3   0.5
+Carpet      4   2/3 but I find better results going bit above 0.5
+Pentagon    5   0.618(golden ratio related)
+Hexagon     6   0.667(2/3)
+Octagon     8   0.707
+'''
 
 no_of_iterations = 10000
+
 
 tracer(0) # speed
 
@@ -34,9 +41,7 @@ def draw_base_shape(
     label_font: tuple = ("Arial", 14),
     center_ratio: float = 0.7
     ) -> dict:
-    """
-    Draws a regular polygon centered on the screen, with optional corner labels and connecting lines.
-
+    """    Draws a regular polygon centered on the screen, with optional corner labels and connecting lines.
     Args:
         sides (int): Number of sides of the polygon.
         side_size (int): Length of each side. Defaults to 2000 / sides.
@@ -103,33 +108,56 @@ def fractalDrawing(sides, no_of_iterations, corners):
 
         current_pos = position()
         current_pos_rounded = (round(current_pos[0]), round(current_pos[1]))
-    
-        forward(pythagorean_triangle(current_pos_rounded, where_to_go))
+
+        distanceToDraw = pythagorean_triangle(current_pos_rounded, where_to_go)
+        forward(distanceToDraw)
 
         # color and dot drawing 
-        hue = define_hue(dice)
+        if sides == 3:
+            hue = define_hue_triangle(dice, distanceToDraw)
+        else:
+            hue = define_hue(distanceToDraw)
+        saturation = define_saturation(distanceToDraw)
         
-        draw_dot(hue)
-
-def define_hue(dice):
-    band_1 = random.uniform(0.1, 0.2)
-    band_2 = random.uniform(0.3, 0.5)
-    band_3 = random.uniform(0.7, 1.0)
+        draw_dot(hue, saturation)
+        # if no of iterations % 1000 then draw the no in the corner
+    
+def define_hue_triangle(dice, distance):
+    # band_1 = random.uniform(0.25, 0.36)
+    band_1 = distance/1000
+    if band_1 > 0.3:
+        band_1 == 0.3
+    band_2 = distance/1000 + 0.4
+    if band_2 > 0.7:
+        band_2 == 0.7
+    band_3 = distance/1000 + 0.8
+    if band_3 > 1.0:
+        band_3 == 1.0
+    
     hue = 0.0
     if dice == 1:
-        hue = 0.3 #band_1
+        hue = band_1
     elif dice == 2:
-        hue = 0.5 #band_2
+        hue = band_2
     else:
-        hue = 0.8 #band_3
-        #hue = i / (dice * 1.5) / no_of_iterations
+        hue = band_3
+       
     return hue
-    # TODO play with saturation and value based on position. Darker closer to the centre  
-
-def draw_dot(hue):
     
-    # TODO play with saturation based on distance from the center
-    rgb = colorsys.hsv_to_rgb(hue, 0.6, 0.9)
+def define_hue(distance):
+    normalized = distance / 1000
+    if normalized < 0.5:
+        normalized += 0.3
+    return normalized    
+
+def define_saturation(distance):
+    normalized = distance / 1000
+    if normalized < 0.5 :
+        normalized += 0.3
+    return normalized
+
+def draw_dot(hue, saturation):
+    rgb = colorsys.hsv_to_rgb(hue, saturation, 0.7)
     dot(3, rgb)
 
 def main():
@@ -137,6 +165,7 @@ def main():
     corners = draw_base_shape(sides, side_size, draw_labels=True, draw_lines=True)
 
     fractalDrawing(sides, no_of_iterations, corners)
+    hideturtle()
 
 if __name__ == "__main__":
     main()
