@@ -1,5 +1,4 @@
 from turtle import *
-from turtle import Turtle
 import random
 import math
 import colorsys
@@ -15,9 +14,9 @@ penup()
 
 # TODO Play with those numbers
 # change those numbers to get different shapes
-sides = 5
+sides = 3
 side_size = 2000 / sides
-ratio = 0.618
+ratio = 0.5
 ''' Perfect ratios according to wikipedia
 Triangle    3   0.5
 Carpet      4   2/3 but I find better results going bit above 0.5
@@ -26,7 +25,7 @@ Hexagon     6   0.667(2/3)
 Octagon     8   0.707
 '''
 
-no_of_iterations = 50 * 1000
+no_of_iterations = 52 * 1000
 
 
 tracer(50, 0) # speed
@@ -34,13 +33,29 @@ tracer(50, 0) # speed
 writingTurtle = Turtle()
 # functions
 
-def writeIterations():
-    pass
+# counter
+def writeIterations(loop_count):
+    writingTurtle.hideturtle()
+    offsetOfCenter = offset()
+    additionalOffset = 1.2
+    writingTurtle.teleport(-offsetOfCenter * additionalOffset, -offsetOfCenter * additionalOffset)
+    
+    if loop_count % 100 == 0:
+        writingTurtle.clear()
+        writingTurtle.write(loop_count, move= False, font=("Arial", 30, "normal"))
+        drawScoringUnderline(5, loop_count/100)
+
+def drawScoringUnderline(size, length):
+    writingTurtle.pensize(size)
+    writingTurtle.forward(length)
+    writingTurtle.backward(length)
+
+# end of counter   
 
 def offset(center_ratio: float = 0.7):
     offset_to_center = side_size/(2 * math.sin(math.pi/sides)) * -center_ratio # calculate the radius of the polygon 
-    teleport(offset_to_center,offset_to_center) # offset the shape so the result is drawn in the middle
-
+    return offset_to_center
+   
 def draw_base_shape(
     sides: int,
     side_size: int = 2000 / sides,
@@ -67,9 +82,9 @@ def draw_base_shape(
         This is a base for fractal creation. To be used with other functions provided.
     """
     assert sides > 2, "sides must be greater than 2"
-    offset()
-    # offset_to_center = side_size/(2 * math.sin(math.pi/sides)) * -center_ratio # calculate the radius of the polygon 
-    # teleport(offset_to_center,offset_to_center) # offset the shape so the result is drawn in the middle
+    offsetOfCenter = offset()
+    teleport(offsetOfCenter,offsetOfCenter) # offset the shape so the result is drawn in the middle
+    
     
     if draw_lines: # deals with drawing outlines
         pendown()
@@ -110,6 +125,15 @@ def pythagorean_triangle(current_pos, where_to_go) -> int:
 def fractalDrawing(sides, no_of_iterations, corners):
 # fractal drawing
     for i in range(no_of_iterations):
+        if i == 1000:
+            tracer(i/10,0)
+        if i == 5 * 1000:
+            tracer(i/5)
+        if i == 15 * 1000:
+            tracer(i/3)
+      
+        
+        
         dice = random.randrange(1,sides + 1)
         where_to_go = corners[dice]
         x = round(where_to_go[0])
@@ -130,8 +154,9 @@ def fractalDrawing(sides, no_of_iterations, corners):
         saturation = define_saturation(distanceToDraw)
         
         draw_dot(hue, saturation)
-        # if no of iterations % 1000 then draw the no in the corner
-    
+        
+        writeIterations(i)
+           
 def define_hue_triangle(dice, distance):
     # band_1 = random.uniform(0.25, 0.36)
     band_1 = distance/1000
@@ -170,17 +195,19 @@ def draw_dot(hue, saturation):
     rgb = colorsys.hsv_to_rgb(hue, saturation, 0.7)
     dot(3, rgb)
 
-def main():
+def main(sides, side_size, no_of_iterations, draw_labels=True, draw_lines=True):
     # Draw initial shape
-    corners = draw_base_shape(sides, side_size, draw_labels=True, draw_lines=True)
-    offset()
+    corners = draw_base_shape(sides, side_size, draw_labels, draw_lines)
+    
+    
 
     fractalDrawing(sides, no_of_iterations, corners)
+
     hideturtle()
     update()
 
 if __name__ == "__main__":
-    main()
+    main(sides, side_size, no_of_iterations, draw_labels=False, draw_lines=False)
 
 
 
