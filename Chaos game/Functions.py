@@ -3,7 +3,7 @@ import random
 import math
 import colorsys
 
-# of set of
+# setup
 setup(1.0,1.0)
 
 speed(0)
@@ -14,9 +14,9 @@ penup()
 
 # TODO Play with those numbers
 # change those numbers to get different shapes
-sides = 3
+sides = 8
 side_size = 2000 / sides
-ratio = 0.5
+ratio = 0.707
 ''' Perfect ratios according to wikipedia
 Triangle    3   0.5
 Carpet      4   2/3 but I find better results going bit above 0.5
@@ -25,11 +25,13 @@ Hexagon     6   0.667(2/3)
 Octagon     8   0.707
 '''
 
-no_of_iterations = 52 * 1000
+no_of_iterations = 82 * 1000
 
 
 tracer(50, 0) # speed
 
+# TODO Randomly generate initial points  
+# TODO 3rd turtle writing how many sides we have and current ratio. Make it as a 3rd turtle so I can draw it once and not redraw it each iteration
 writingTurtle = Turtle()
 # functions
 
