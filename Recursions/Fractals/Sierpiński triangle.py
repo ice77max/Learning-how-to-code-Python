@@ -46,6 +46,8 @@ def drawTriangle(ax, ay, bx, by, cx, cy):
     
 # Draw an equilateral Sierpinski Triangle
     
-drawTriangle(50, 50, 350, 650, 650, 50)
+# drawTriangle(50, 50, 350, 650, 650, 50)
     
+drawTriangle(80, 80, 150, 650, 650, 150)
+
 t.exitonclick()
