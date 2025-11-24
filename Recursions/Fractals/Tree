@@ -1,0 +1,59 @@
+from turtle import *
+import time
+import random
+
+# setup
+tracer(1000, 0)
+setworldcoordinates(0, 0, 700, 700)
+hideturtle()
+
+def drawBranch(startPosition, direction, branchL):
+    if branchL < 5:
+        # base case
+        return
+    
+    # go to starting point & direction
+    penup()
+    goto(startPosition)
+    setheading(direction)
+    
+    # draw a branch (thickness is 1/7 the lenght)
+    pendown()
+    pensize(max(branchL / 7.0, 1))
+    forward(branchL)
+    
+    # record the position of the branch's end
+    endPosition = position()
+    leftDirection = direction + LEFT_ANGLE
+    leftBranchL = branchL - LEFT_DECREASE
+    rightDirection = direction - RIGHT_ANGLE
+    rightBranchL = branchL - RIGHT_DECREASE
+    
+    # recursive case
+    drawBranch(endPosition, leftDirection, leftBranchL)
+    drawBranch(endPosition, rightDirection, rightBranchL)
+    
+seed = 0
+
+while True:
+    # get pseudorandom numbers for the branch properties
+    random.seed(seed)
+    
+    LEFT_ANGLE      = random.randint(10, 30)
+    LEFT_DECREASE   = random.randint( 8, 15)
+    RIGHT_ANGLE     = random.randint(10, 30)
+    RIGHT_DECREASE   = random.randint( 8, 15)
+    START_LENGTH    = random.randint(80, 120)
+    
+    # write out the seed number
+    clear()
+    penup()
+    goto(10,10)
+    write("Seed: %s" % (seed))
+    
+    # draw the tree
+    drawBranch((350, 10), 90, START_LENGTH)
+    update()
+    time.sleep(2)
+    
+    seed += 1

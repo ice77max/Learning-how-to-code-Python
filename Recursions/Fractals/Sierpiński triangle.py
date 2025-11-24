@@ -51,3 +51,4 @@ def drawTriangle(ax, ay, bx, by, cx, cy):
 drawTriangle(80, 80, 150, 650, 650, 150)
 
 t.exitonclick()
+
