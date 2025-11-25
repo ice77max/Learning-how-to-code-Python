@@ -4,6 +4,7 @@ import random
 
 # setup
 tracer(1000, 0)
+setup(1.0, 1.0)
 setworldcoordinates(0, 0, 700, 700)
 hideturtle()
 
@@ -17,7 +18,7 @@ def drawBranch(startPosition, direction, branchL):
     goto(startPosition)
     setheading(direction)
     
-    # draw a branch (thickness is 1/7 the lenght)
+    # draw a branch (thickness is 1/7 the length)
     pendown()
     pensize(max(branchL / 7.0, 1))
     forward(branchL)
