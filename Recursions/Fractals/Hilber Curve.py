@@ -1,7 +1,7 @@
 from turtle import *
 
 # setup
-tracer(10,0)
+tracer(5,0)
 setworldcoordinates(0,0, 700, 700)
 hideturtle()
 
@@ -23,13 +23,13 @@ def hilbertCurveQuadrant(level, angle):
         hilbertCurveQuadrant(level - 1, -angle)
         forward(LINE_LENGTH)
         left(angle)
-        hilbertCurveQuadrant(level - 1, -angle)
+        hilbertCurveQuadrant(level - 1, angle)
         forward(LINE_LENGTH)
-        hilbertCurveQuadrant(level - 1, -angle)
+        hilbertCurveQuadrant(level - 1, angle)
         left(angle)
         forward(LINE_LENGTH)
         hilbertCurveQuadrant(level - 1, -angle)
-        left(angle)
+        right(angle)
         return
 def hilbertCurve(startingPosition):
     penup()
