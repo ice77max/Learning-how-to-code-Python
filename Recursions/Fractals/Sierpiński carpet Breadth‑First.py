@@ -1,6 +1,6 @@
 from turtle import *
 
-tracer(0,0)  # full control over updates
+tracer(30,0)  # full control over updates
 setworldcoordinates(0, 0, 700, 700)
 hideturtle()
 

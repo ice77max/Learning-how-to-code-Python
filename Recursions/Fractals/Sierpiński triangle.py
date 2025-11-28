@@ -3,7 +3,7 @@ import turtle as t
 t.tracer(100,0) 
 t.setworldcoordinates(0,0, 700, 700)
 t.hideturtle()
-t.pensize(1)
+t.pensize(2)
 
 MIN_SIZE = 3
 

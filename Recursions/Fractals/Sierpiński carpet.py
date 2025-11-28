@@ -6,8 +6,8 @@ hideturtle()
 
 MIN_SIZE = 6 # change to increase or decrease amount of recursions
 DRAW_SOLID = True
-SET_COLOR = "#11EFFF"
-BG_COLOR = "#F7A117"
+SET_COLOR = "#CD80F7"
+BG_COLOR = "#8EF87E"
 
 bgcolor(BG_COLOR)
 
