@@ -8,7 +8,7 @@ hideturtle()
 LINE_LENGTH = 5
 ANGLE = 90
 LEVELS = 6
-DRAW_SOLID = True
+DRAW_SOLID = False
 setheading(0) # change to start at an angle
 
 # functions
