@@ -3,17 +3,11 @@ import random
 import math
 import colorsys
 
-# setup
-setup(1.0,1.0)
-
-speed(0)
-pensize(1)
-
-penup()
-
 
 # TODO Play with those numbers
 # change those numbers to get different shapes
+
+no_of_iterations = 1 * 1000
 sides = 16
 side_size = 2000 / sides
 ratio = 0.707
@@ -25,17 +19,18 @@ Hexagon     6   0.667(2/3)
 Octagon     8   0.707
 '''
 
-no_of_iterations = 82 * 1000
-
-
-tracer(50, 0) # speed
-
 # TODO Randomly generate initial points  
-# TODO 3rd turtle writing how many sides we have and current ratio. Make it as a 3rd turtle so I can draw it once and not redraw it each iteration
+
 turtle_2_writingIterations = Turtle()
 turtle_3_writingLabels = Turtle()
 
 # Functions
+
+def initialSetup(speed = 50, size = 1):
+    setup(1.0,1.0)
+    tracer(speed, 0) 
+    pensize(size)
+    penup()
 
 shapeNames = {
     "3": "Trigon, Sierpiński triangle",
@@ -51,7 +46,7 @@ shapeNames = {
     "13": "Tridecagon",
     "14": "Tetradecagon",
     "15": "Pendedecagon",
-    "16": "Hexdecagpn",
+    "16": "Hexdecagon",
     "17": "Heptdecagon",
     "18": "Octdecagon",
     "19": "Enneadecagon",
@@ -89,8 +84,7 @@ def writingLabels():
     
     
 def writeIterations(loop_count):
-    """
-    Writes the current iteration count on the screen using turtle_2_writingIterations.
+    """ Writes the current iteration count on the screen using turtle_2_writingIterations.
 
     Parameters:
         loop_count (int): The current iteration number to display.
@@ -266,6 +260,7 @@ def draw_dot(hue, saturation):
 
 def main(sides, side_size, no_of_iterations, draw_labels=True, draw_lines=True):
     # Draw initial shape
+    initialSetup()
     corners = draw_base_shape(sides, side_size, draw_labels, draw_lines)
     writingLabels()    
 
