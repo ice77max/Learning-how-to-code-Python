@@ -14,7 +14,7 @@ penup()
 
 # TODO Play with those numbers
 # change those numbers to get different shapes
-sides = 8
+sides = 16
 side_size = 2000 / sides
 ratio = 0.707
 ''' Perfect ratios according to wikipedia
@@ -32,25 +32,92 @@ tracer(50, 0) # speed
 
 # TODO Randomly generate initial points  
 # TODO 3rd turtle writing how many sides we have and current ratio. Make it as a 3rd turtle so I can draw it once and not redraw it each iteration
-writingTurtle = Turtle()
-# functions
+turtle_2_writingIterations = Turtle()
+turtle_3_writingLabels = Turtle()
+
+# Functions
+
+shapeNames = {
+    "3": "Trigon, Sierpiński triangle",
+    "4": "Tetragon, Sierpiński carpet",
+    "5": "Pentagon",
+    "6": "Hexagon",
+    "7": "Heptagon",
+    "8": "Octagon",
+    "9": "Nonagon",
+    "10": "Decagon",
+    "11": "Hendecagon",
+    "12": "Dodecagon",
+    "13": "Tridecagon",
+    "14": "Tetradecagon",
+    "15": "Pendedecagon",
+    "16": "Hexdecagpn",
+    "17": "Heptdecagon",
+    "18": "Octdecagon",
+    "19": "Enneadecagon",
+    "20": "Icosagon",
+    "n-gon": "n-gon",
+    
+}
 
 # counter
-def writeIterations(loop_count):
-    writingTurtle.hideturtle()
+
+def writingLabels():
+    turtle_3_writingLabels.hideturtle()
+    turtle_3_writingLabels.penup()
+    turtle_3_writingLabels.pencolor("#363636")
     offsetOfCenter = offset()
     additionalOffset = 1.2
-    writingTurtle.teleport(-offsetOfCenter * additionalOffset, -offsetOfCenter * additionalOffset)
+    turtle_3_writingLabels.teleport(-offsetOfCenter * additionalOffset * 1.3, -offsetOfCenter * additionalOffset)
+    
+    # writing labels
+    turtle_3_writingLabels.write("Number of \niterations: ", move= False, font=("Arial", 30, "normal"))
+    # grab position and offset turtle on Y axis 
+    position = turtle_3_writingLabels.position()
+    offsetY = -80
+    turtle_3_writingLabels.sety(position[1] + offsetY)
+    turtle_3_writingLabels.write(f"Ratio: {ratio}", move= False, font=("Arial", 30, "normal"))
+    turtle_3_writingLabels.sety(position[1] + offsetY * 2)
+    turtle_3_writingLabels.write(f"Number of sides: {sides}", move= False, font=("Arial", 30, "normal"))
+    
+    turtle_3_writingLabels.sety(position[1] + offsetY * 3)
+    if sides <21:
+        turtle_3_writingLabels.write(shapeNames[str(sides)], move= False, font=("Arial", 30, "normal"))
+    else:
+        turtle_3_writingLabels.write(shapeNames["n-gon"], move= False, font=("Arial", 30, "normal"))
+        
+    
+    
+def writeIterations(loop_count):
+    """
+    Writes the current iteration count on the screen using turtle_2_writingIterations.
+
+    Parameters:
+        loop_count (int): The current iteration number to display.
+    """
+    turtle_2_writingIterations.hideturtle()
+    offsetOfCenter = offset()
+    additionalOffset = 1.2
+    turtle_2_writingIterations.teleport(-offsetOfCenter * additionalOffset * 1.3 + 200, -offsetOfCenter * additionalOffset)
     
     if loop_count % 100 == 0:
-        writingTurtle.clear()
-        writingTurtle.write(loop_count, move= False, font=("Arial", 30, "normal"))
-        drawScoringUnderline(5, loop_count/100)
+        turtle_2_writingIterations.clear()
+        turtle_2_writingIterations.write(loop_count, move= False, font=("Arial", 30, "normal"))
+        # drawScoringUnderline(5, loop_count/100) # draws a growing line under iterations
+    turtle_2_writingIterations.hideturtle()
+    offsetOfCenter = offset()
+    additionalOffset = 1.2
+    turtle_2_writingIterations.teleport(-offsetOfCenter * additionalOffset * 1.3 + 200, -offsetOfCenter * additionalOffset)
+    
+    if loop_count % 100 == 0:
+        turtle_2_writingIterations.clear()
+        turtle_2_writingIterations.write(loop_count, move= False, font=("Arial", 30, "normal"))
+        # drawScoringUnderline(5, loop_count/100) # draws a growing line under iterations
 
 def drawScoringUnderline(size, length):
-    writingTurtle.pensize(size)
-    writingTurtle.forward(length)
-    writingTurtle.backward(length)
+    turtle_2_writingIterations.pensize(size)
+    turtle_2_writingIterations.forward(length)
+    turtle_2_writingIterations.backward(length)
 
 # end of counter   
 
@@ -200,8 +267,7 @@ def draw_dot(hue, saturation):
 def main(sides, side_size, no_of_iterations, draw_labels=True, draw_lines=True):
     # Draw initial shape
     corners = draw_base_shape(sides, side_size, draw_labels, draw_lines)
-    
-    
+    writingLabels()    
 
     fractalDrawing(sides, no_of_iterations, corners)
 
