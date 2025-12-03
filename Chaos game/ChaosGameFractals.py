@@ -7,10 +7,10 @@ import colorsys
 # TODO Play with those numbers
 # change those numbers to get different shapes
 
-no_of_iterations = 1 * 1000
-sides = 16
+no_of_iterations = 51 * 1000
+sides = 3
 side_size = 2000 / sides
-ratio = 0.707
+ratio = 0.5
 ''' Perfect ratios according to wikipedia
 Triangle    3   0.5
 Carpet      4   2/3 but I find better results going bit above 0.5
