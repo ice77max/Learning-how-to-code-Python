@@ -7,10 +7,11 @@ import colorsys
 # TODO Play with those numbers
 # change those numbers to get different shapes
 
-no_of_iterations = 51 * 1000
-sides = 3
+no_of_iterations = 101 * 1000
+sides = 8
 side_size = 2000 / sides
-ratio = 0.5
+ratio = 0.707
+speedMultiplier = 10
 ''' Perfect ratios according to wikipedia
 Triangle    3   0.5
 Carpet      4   2/3 but I find better results going bit above 0.5
@@ -28,7 +29,7 @@ turtle_3_writingLabels = Turtle()
 
 def initialSetup(speed = 50, size = 1):
     setup(1.0,1.0)
-    tracer(speed, 0) 
+    tracer(speed * speedMultiplier, 0) 
     pensize(size)
     penup()
 
@@ -81,8 +82,6 @@ def writingLabels():
     else:
         turtle_3_writingLabels.write(shapeNames["n-gon"], move= False, font=("Arial", 30, "normal"))
         
-    
-    
 def writeIterations(loop_count):
     """ Writes the current iteration count on the screen using turtle_2_writingIterations.
 
@@ -189,11 +188,13 @@ def fractalDrawing(sides, no_of_iterations, corners):
 # fractal drawing
     for i in range(no_of_iterations):
         if i == 1000:
-            tracer(i/10,0)
+            tracer(i/10 * speedMultiplier)
         if i == 5 * 1000:
-            tracer(i/5)
+            tracer(i/5 * speedMultiplier)
         if i == 15 * 1000:
-            tracer(i/3)
+            tracer(i/3 * speedMultiplier)
+        if i == 50 * 1000:
+            tracer(i/2 * speedMultiplier)
       
         
         
@@ -270,7 +271,7 @@ def main(sides, side_size, no_of_iterations, draw_labels=True, draw_lines=True):
     update()
 
 if __name__ == "__main__":
-    main(sides, side_size, no_of_iterations, draw_labels=False, draw_lines=False)
+    main(sides, side_size, no_of_iterations, draw_labels=True, draw_lines=False)
 
 
 
