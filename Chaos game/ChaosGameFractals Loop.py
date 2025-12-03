@@ -7,7 +7,7 @@ from time import sleep
 # TODO Play with those numbers
 # change those numbers to get different shapes
 
-no_of_iterations = 1 * 1000
+no_of_iterations = 100 * 1000
 sides = 3
 side_size = 2000 / sides
 ratio = 0.707
@@ -272,6 +272,11 @@ def draw_dot(hue, saturation):
 	rgb = colorsys.hsv_to_rgb(hue, saturation, 0.7)
 	dot(3, rgb)
 
+def clearAllTurtles():
+    clear()
+    turtle_2_writingIterations.clear()
+    turtle_3_writingLabels.clear()
+    home()
 
 def main(sides, side_size, no_of_iterations, draw_labels=True, draw_lines=True):
 	# Draw initial shape
@@ -293,9 +298,7 @@ for i in range(3, 22):
 		ratio = j/10
 		main(sides, side_size, no_of_iterations, draw_labels=True, draw_lines=False)
 		sleep(2)
-		clear()
-		turtle_2_writingIterations.clear()
-		turtle_3_writingLabels.clear()
-		home()
+		clearAllTurtles()
+		
 
 exitonclick()

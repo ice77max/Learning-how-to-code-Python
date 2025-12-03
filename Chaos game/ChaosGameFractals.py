@@ -107,9 +107,9 @@ def writeIterations(loop_count):
 	turtle_2_writingIterations.teleport(-offsetOfCenter * additionalOffset * 1.3 + 200,
 										-offsetOfCenter * additionalOffset)
 
-	if loop_count % 100 == 0:
+	if loop_count == no_of_iterations - 1:
 		turtle_2_writingIterations.clear()
-		turtle_2_writingIterations.write(loop_count, move=False, font=("Arial", 30, "normal"))
+		turtle_2_writingIterations.write(no_of_iterations, move=False, font=("Arial", 30, "normal"))
 		# drawScoringUnderline(5, loop_count/100) # draws a growing line under iterations
 
 
