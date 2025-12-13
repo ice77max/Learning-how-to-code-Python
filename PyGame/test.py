@@ -1,5 +1,22 @@
-import memoryPuzzle
+import pygame
+import sys
 
-memoryPuzzle.splitIntoGroupsOf(3, [0,1,2,3,4,5,6,7,8,9])
-x = memoryPuzzle.getBoxAtPixel(150,150)
-print(x)
+pygame.init()
+screen = pygame.display.set_mode((600, 600))
+clock = pygame.time.Clock()
+
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Fade loop
+    for start, end, step in ((0, 255, 1), (255, 0, -1)):
+        for i in range(start, end, step):
+            screen.fill((i, i, i))  # grayscale background
+            pygame.display.flip()
+            clock.tick(60)  # control speed
+
+pygame.quit()
+sys.exit()
