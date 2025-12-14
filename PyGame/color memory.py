@@ -220,8 +220,10 @@ def gameOverAnimation(color=WHITE, animationSpeed=50):
                 DISPLAYSURF.blit(origSurf, (0, 0))
                 DISPLAYSURF.blit(flashSurf, (0, 0))
                 drawButtons()
+                BEEP3.play()
                 pygame.display.update()
                 FPSCLOCK.tick(FPS)
+    
     
 def getButtonClicked(x, y):
     if YELLOWRECT.collidepoint((x, y)):
