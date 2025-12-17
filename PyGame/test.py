@@ -23,6 +23,21 @@ allColors = [BLACK, WHITE, RED, GREEN, CYAN, PURPLE, BLUE]
 FPS = 10
 clock = pygame.time.Clock()
 
+position = (200,200)
+
+def main():
+    SCREEN.fill(BLACK)
+
+    randomPosition = (random.randint(10,590), random.randint(10, 490))
+
+    # pygame.draw.circle(SCREEN, random.choice(allColors), randomPosition, 10)
+    pygame.draw.circle(SCREEN, WHITE, position, 50)
+    
+    pygame.display.update()
+    
+    clock.tick(FPS)
+
+
 # game loop
 running = True
 while running:
@@ -32,15 +47,7 @@ while running:
             sys.exit()
             running = False
 
-    SCREEN.fill(BLACK)
-
-    randomPosition = (random.randint(10,590), random.randint(10, 490))
-
-    pygame.draw.circle(SCREEN, random.choice(allColors), randomPosition, 10)
-    
-    pygame.display.update()
-    
-    clock.tick(FPS)
+    main()
 
 
 pygame.quit()
