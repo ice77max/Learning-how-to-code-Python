@@ -8,7 +8,7 @@ from time import sleep
 # TODO Play with those numbers
 # change those numbers to get different shapes
 
-no_of_iterations = 100 * 1000
+no_of_iterations = 50 * 1000
 sides = 3
 side_size = 2000 / sides
 ratio = 0.707
@@ -303,7 +303,7 @@ for i in range(3, 22):
 		main(sides, side_size, no_of_iterations, draw_labels=False, draw_lines=False)
 		
 		# image saving
-		fileDir = "D:/Chaos game/100k"
+		fileDir = "D:/Chaos game/50k"
 		os.makedirs(fileDir, exist_ok=True)
 		getscreen().getcanvas().postscript(file=f"{fileDir}/{sides} sides | {no_of_iterations} - iterations | ratio {ratio}.eps")
 
