@@ -3,17 +3,16 @@ import random
 import math
 import colorsys
 import os
+from time import sleep
 
 # TODO Play with those numbers
 # change those numbers to get different shapes
 
-no_of_iterations = 1 * 1000
+no_of_iterations = 100 * 1000
 sides = 3
 side_size = 2000 / sides
-ratio = 0.5
-speedMultiplier = 10
-# draws the shape instantly if True. 
-instant = True
+ratio = 0.707
+speedMultiplier = 1
 ''' Perfect ratios according to wikipedia
 Triangle    3   0.5
 Carpet      4   2/3 but I find better results going bit above 0.5
@@ -27,14 +26,12 @@ Octagon     8   0.707
 turtle_2_writingIterations = Turtle()
 turtle_3_writingLabels = Turtle()
 
-img = getscreen()
-
 
 # Functions
 
 def initialSetup(speed=50, size=1):
 	setup(1.0, 1.0)
-	tracer(speed * speedMultiplier, 0)
+	tracer(0)
 	pensize(size)
 	penup()
 
@@ -199,20 +196,19 @@ def pythagorean_triangle(current_pos, where_to_go) -> int:
 	return round(c * ratio)
 
 
-def fractalDrawing(sides, no_of_iterations, corners, instant):
+def fractalDrawing(sides, no_of_iterations, corners):
 	# fractal drawing
 	for i in range(no_of_iterations):
-		if instant == False:
-			if i == 1000:
-				tracer(i / 10 * speedMultiplier)
-			elif i == 5 * 1000:
-				tracer(i / 5 * speedMultiplier)
-			elif i == 15 * 1000:
-				tracer(i / 3 * speedMultiplier)
-			elif i == 50 * 1000:
-				tracer(i / 2 * speedMultiplier)
-		else:
-			tracer(0)
+		# if i == 1000:
+		# 	tracer(i / 10 * speedMultiplier)
+		# if i == 5 * 1000:
+		# 	tracer(i / 5 * speedMultiplier)
+		# if i == 15 * 1000:
+		# 	tracer(i / 3 * speedMultiplier)
+		# if i == 50 * 1000:
+		# 	tracer(i / 2 * speedMultiplier)
+
+		tracer(0)
 
 		dice = random.randrange(1, sides + 1)
 		where_to_go = corners[dice]
@@ -235,6 +231,7 @@ def fractalDrawing(sides, no_of_iterations, corners, instant):
 
 		draw_dot(hue, saturation)
 
+		
 		writeIterations(i)
 
 
@@ -279,6 +276,11 @@ def draw_dot(hue, saturation):
 	rgb = colorsys.hsv_to_rgb(hue, saturation, 0.7)
 	dot(3, rgb)
 
+def clearAllTurtles():
+    clear()
+    turtle_2_writingIterations.clear()
+    turtle_3_writingLabels.clear()
+    home()
 
 def main(sides, side_size, no_of_iterations, draw_labels=True, draw_lines=True):
 	# Draw initial shape
@@ -286,19 +288,26 @@ def main(sides, side_size, no_of_iterations, draw_labels=True, draw_lines=True):
 	corners = draw_base_shape(sides, side_size, draw_labels, draw_lines)
 	writingLabels()
 
-	fractalDrawing(sides, no_of_iterations, corners, instant)
+	fractalDrawing(sides, no_of_iterations, corners)
 
 	hideturtle()
 	update()
- 	
-	# saving image
-	fileDir = "D:/Chaos game"
-	os.makedirs(fileDir, exist_ok=True)
-	img.getcanvas().postscript(file=f"{fileDir}/{sides} sides - {no_of_iterations} - ratio {ratio}.eps")
-	img.getcanvas().postscript(file=f"{fileDir}/{sides} sides - {no_of_iterations} - ratio {ratio}.ps")
 
+for i in range(3, 22):
+	sides = i
+	side_size = 2000 / sides
+	for j in range(1,12):
+		if j == 10:
+			continue
+		ratio = j/10
+		main(sides, side_size, no_of_iterations, draw_labels=False, draw_lines=False)
+		
+		# image saving
+		fileDir = "D:/Chaos game/100k"
+		os.makedirs(fileDir, exist_ok=True)
+		getscreen().getcanvas().postscript(file=f"{fileDir}/{sides} sides | {no_of_iterations} - iterations | ratio {ratio}.eps")
 
-if __name__ == "__main__":
-	main(sides, side_size, no_of_iterations, draw_labels=False, draw_lines=False)
+		clearAllTurtles()
+		
 
 exitonclick()
