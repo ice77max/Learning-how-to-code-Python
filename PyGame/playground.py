@@ -20,22 +20,32 @@ BLUE = pygame.Color("#3F87FA")
 
 allColors = [BLACK, WHITE, RED, GREEN, CYAN, PURPLE, BLUE]
 # time 
-FPS = 10
+FPS = 15
 clock = pygame.time.Clock()
 
-position = (200,200)
+position1 = pygame.Vector2(200,200)
+position2 = pygame.Vector2(400,400)
 
 def main():
     SCREEN.fill(BLACK)
 
-    randomPosition = (random.randint(10,590), random.randint(10, 490))
-
+    # randomPosition = (random.randint(10,590), random.randint(10, 490))
     # pygame.draw.circle(SCREEN, random.choice(allColors), randomPosition, 10)
-    pygame.draw.circle(SCREEN, WHITE, position, 50)
+    
+    movingBall(position1, 3, 10)
+    movingBall(position2, 1, 10)
+    
+    pygame.draw.aaline(SCREEN, WHITE, position1, position2, 5)
     
     pygame.display.update()
     
     clock.tick(FPS)
+
+# TODO explore Vector 2, velocity, normalize and clamp
+def movingBall(position, value, size):
+    pygame.draw.circle(SCREEN, WHITE, position, size)
+    position += pygame.Vector2(random.randint( -value, value), random.randint( -value, value))
+    
 
 
 # game loop
